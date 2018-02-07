@@ -200,6 +200,13 @@
             }
           ]
         }
+      },
+      {
+        "name": "addon.autoloot",
+        "config": {
+          "activated": true,
+          "PitBossNormalDrop": true
+        }
       }
     ]
   }
