@@ -51,7 +51,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VariousSettings", "Addons\V
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AccuracyEffect", "Addons\AccuracyEffect\AccuracyEffect.vcxproj", "{7DB14895-DF17-4E19-A0A5-2D2EF33FE89C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoLoot", "..\..\!!develop_rf_online_defense\!_RF_ONLINE_GU_DEFENSE\Yorozuya\Addons\AutoLoot\AutoLoot.vcxproj", "{8FA165F2-8654-418C-A506-FABD93A0DA77}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoLoot", "Addons\AutoLoot\AutoLoot.vcxproj", "{8FA165F2-8654-418C-A506-FABD93A0DA77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

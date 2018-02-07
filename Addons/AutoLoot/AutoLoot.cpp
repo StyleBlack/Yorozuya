@@ -11,6 +11,7 @@ namespace GameServer
     namespace Addon
     {
         bool CAutoLoot::m_bActivated = false;
+		bool CAutoLoot::m_bPitBossNormalDrop = false;
 
         void CAutoLoot::load()
         {
@@ -32,6 +33,7 @@ namespace GameServer
         void CAutoLoot::configure(const rapidjson::Value & nodeConfig)
         {
 			CAutoLoot::m_bActivated = RapidHelper::GetValueOrDefault(nodeConfig, "activated", false);
+			CAutoLoot::m_bPitBossNormalDrop = RapidHelper::GetValueOrDefault(nodeConfig, "PitBossNormalDrop", false);
         }
 
         ATF::CItemBox* CAutoLoot::CreateItemBox(
@@ -62,20 +64,19 @@ namespace GameServer
 					break;
 				}
 
-				if (pThrower->m_ObjID.m_byKind == 0 &&
-					pThrower->m_ObjID.m_byID != (uint8_t)e_obj_id::obj_id_monster)
+				if (pThrower->m_ObjID.m_byKind == 0 && pThrower->m_ObjID.m_byID != (uint8_t)e_obj_id::obj_id_monster)
 				{
 					result = next(pItem, pOwner, dwPartyBossSerial, bPartyShare, pThrower, byCreateCode, pMap, wLayerIndex, pStdPos, bHide);
 					break;
 				}
 
 				ATF::CMonster* pMonster = (ATF::CMonster*)pThrower;
-				if (pMonster->IsBossMonster())
+				if (CAutoLoot::m_bPitBossNormalDrop && pMonster->IsBossMonster())
 				{
 					result = next(pItem, pOwner, dwPartyBossSerial, bPartyShare, pThrower, byCreateCode, pMap, wLayerIndex, pStdPos, bHide);
 					break;
 				}
-				if(bPartyShare )
+
 				for (auto& item : pOwner->m_Param.m_dbInven.m_List)
 				{
 						if (!item.m_bLoad)
@@ -94,14 +95,13 @@ namespace GameServer
 						{
 							pOwner->Emb_AlterDurPoint(0, item.m_byStorageIndex, 1, 1, 1);
 							pOwner->SendMsg_TakeAddResult(0, &item);
-							//pOwner->SendMsg_AdjustAmountInform(0, item.m_wSerial, pItem->m_dwDur);
 							return 0;
 						}
 				}
 
 				auto emptyIndex = pOwner->m_Param.m_dbInven.GetIndexEmptyCon();
 
-				if (emptyIndex == 255) //инвентарь полон
+				if (emptyIndex == 255)
 				{
 					result = next(pItem, pOwner, dwPartyBossSerial, bPartyShare, pThrower, byCreateCode, pMap, wLayerIndex, pStdPos, bHide);
 					break;

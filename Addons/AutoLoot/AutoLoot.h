@@ -25,6 +25,7 @@ namespace GameServer
             virtual void configure(const rapidjson::Value& nodeConfig) override;
         private:
             static bool m_bActivated;
+			static bool m_bPitBossNormalDrop;
 
             static ATF::CItemBox* WINAPIV CreateItemBox(
                 ATF::_STORAGE_LIST::_db_con* pItem,
